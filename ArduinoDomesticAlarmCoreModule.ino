@@ -60,7 +60,6 @@ void setup() {
   LCD.begin(LCD_NumberOfColumns, LCD_NumberOfRows);
   LCD.print("Alarma Desactivada");
 
-  //open the serial port at 9600 bps:
   Serial.begin(9600);
 }
 
@@ -132,7 +131,7 @@ void loop() {
 
         if (count == 1) {
           ClearRowOfLCD(0, 1);
-          PlatActivationSound();
+          PlayActivationSound();
         }
       }
       else
@@ -315,7 +314,7 @@ void ClearRowOfLCD(int col, int row){
   LCD.print(LCD_EmptyString);  
 }
 
-void PlatActivationSound(){
+void PlayActivationSound(){
   digitalWrite(pinOutputBuzz, HIGH);
   delay(50);  
   digitalWrite(pinOutputBuzz, LOW);
