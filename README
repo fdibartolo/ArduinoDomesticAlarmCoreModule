@@ -1,0 +1,3 @@
+This is the core module of a domestic alarm to be used with an Arduino Duemilanove with ATMega328 microcontroller.
+
+The main purpose of this module is to control the keyboard and the LCD display, to interact with the user, and will also be listening to the sensor module, in order to act if any of the wired or wireless sensors were triggered.
