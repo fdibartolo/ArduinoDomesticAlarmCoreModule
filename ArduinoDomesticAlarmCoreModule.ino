@@ -127,12 +127,12 @@ void loop() {
         if (count != previousCount)
           PrintCountdownToLCD(count);
           
-        previousCount = count;
-
-        if (count == 1) {
+        if ((count == 1) && (count != previousCount)) {
           ClearRowOfLCD(0, 1);
           PlayActivationSound();
         }
+
+        previousCount = count;
       }
       else
       {
@@ -316,7 +316,7 @@ void ClearRowOfLCD(int col, int row){
 
 void PlayActivationSound(){
   digitalWrite(pinOutputBuzz, HIGH);
-  delay(50);  
+  delay(200);  
   digitalWrite(pinOutputBuzz, LOW);
 }
 
