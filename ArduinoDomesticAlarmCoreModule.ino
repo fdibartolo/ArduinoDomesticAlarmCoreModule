@@ -20,10 +20,8 @@ const int pinLCD_RS = 7;
 const int LCD_NumberOfColumns = 16;
 const int LCD_NumberOfRows = 2;
 const char LCD_EmptyString[] = "                ";
-
 LiquidCrystal LCD(pinLCD_RS, pinLCD_E, pinLCD_D4, pinLCD_D5, pinLCD_D6, pinLCD_D7);
 
-/* led, sensors */
 const int pinOutputLed = 8;
 const int pinOutputBuzz = 9;
 const int pinSensor = A5;
@@ -37,7 +35,7 @@ int password[5];
 
 boolean alarmActivatedFlag = false;
 unsigned long activatedCountDown = 0;
-int activationThreshold = 20; //seconds (max 99 or change print countdown char declaration!!)
+int activationThreshold = 25; //seconds (max 99 or change print countdown char declaration!!)
 
 boolean alarmTriggeredFlag = false;
 unsigned long triggeredCountDown = 0;
@@ -151,7 +149,7 @@ void loop() {
               ClearRowOfLCD(0, 1);
           }
           else 
-            digitalWrite(pinOutputBuzz, HIGH);
+            PlayTriggeredSound();
         }
         else
           alarmTriggeredFlag = AreSensorsTriggered();
@@ -312,6 +310,16 @@ void PrintCountdownToLCD(int count){
 void ClearRowOfLCD(int col, int row){
   LCD.setCursor(col, row);
   LCD.print(LCD_EmptyString);  
+}
+
+void PlayTriggeredSound(){
+  unsigned long now = millis();
+  if (((now - triggeredCountDown) / 1000) < 3600) //will play for 3600 sec (1hr) unless it is deactivated
+    digitalWrite(pinOutputBuzz, HIGH);
+  else {
+    isLcdUpdateNeeded = true;
+    ClearAllFlagAndOutput(); 
+  }
 }
 
 void PlayActivationSound(){
